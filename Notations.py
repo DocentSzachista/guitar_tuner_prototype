@@ -1,5 +1,5 @@
 from enum import Enum
-
+from matplotlib import pyplot as plt
 class Notations(Enum):
     E=330.0
     B=249.6
@@ -25,7 +25,7 @@ class Printer:
             measure to which notation measured frequency fits. 
             Defaults to 1.5.
         """
-        print(f"xD {sound_main_frequency}")
+       
             #funkcja porównująca w jakim przedziale jest dana struna
         if(sound_main_frequency>Notations.E_MINOR.value-OPT_VALUE 
        and sound_main_frequency<Notations.E_MINOR.value+OPT_VALUE):
@@ -86,3 +86,15 @@ class Printer:
         elif(sound_main_frequency>Notations.E.value+OPT_VALUE):
             
             print(sound_main_frequency, "You are in space outside of Notations.E.value string turn, back") 
+
+class Plotter:
+    
+    @staticmethod
+    def plot_fft(frequencies_range : list,  samples : list) -> None:
+        fig, ax = plt.subplots()
+        ax.plot(frequencies_range, samples, '.-')
+        plt.show()
+        
+        
+        
+        

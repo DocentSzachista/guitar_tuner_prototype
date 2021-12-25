@@ -2,6 +2,7 @@
 from Notations import Printer
 from Recorder import Recorder
 from SoundProcessing import SoundProcessing
+from Notations import Plotter
 
 
 def main():
@@ -12,12 +13,14 @@ def main():
         recorder = Recorder()
         
         while True:
-            recording=recorder.record()
-            recorder.play(recording)    
-            guitar_string_freq=SoundProcessing.process_signal(recording)      
-            #print(guitar_string_freq[0])
-            Printer.print_range(guitar_string_freq[0])
-            #compare(guitar_string_freq[0])        
+            recording=recorder.record()[:,0]
+            #recorder.play(recording)    
+            freqs, samples=SoundProcessing.count_fft(recording)
+            frequency=SoundProcessing.count_desired_frequency(freqs, samples)
+            print(frequency)
+            Plotter.plot_fft(freqs, samples )       
+          #  Printer.print_range(guitar_string_freq[0])
+           
     else:
         print("no recording")
         
