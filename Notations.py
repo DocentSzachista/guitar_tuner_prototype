@@ -1,6 +1,9 @@
 from enum import Enum
 from matplotlib import pyplot as plt
 class Notations(Enum):
+    """ Enum holding frequencies for given notations 
+    
+    """
     E=330.0
     B=249.6
     G=196.0
@@ -88,11 +91,22 @@ class Printer:
             print(sound_main_frequency, "You are in space outside of Notations.E.value string turn, back") 
 
 class Plotter:
-    
+    """ Utility class holding methods to make plots of data samples 
+    """
     @staticmethod
     def plot_fft(frequencies_range : list,  samples : list) -> None:
+        """Plots data of Fast Fourier Transform
+
+        Args:
+            frequencies_range (list): list of frequencies in range of 0 to fs/2 
+            samples (list): samples magnitude
+        """
         fig, ax = plt.subplots()
-        ax.plot(frequencies_range, samples, '.-')
+        ax.set_title("FFT")
+        ax.set_xlabel("frequency [Hz]")
+        ax.set_ylabel("samples magnitude")
+       
+        ax.stem(frequencies_range, samples, '.-')
         plt.show()
         
         

@@ -19,7 +19,7 @@ def main():
             frequency=SoundProcessing.count_desired_frequency(freqs, samples)
             print(frequency)
             Plotter.plot_fft(freqs, samples )       
-          #  Printer.print_range(guitar_string_freq[0])
+           # Printer.print_range(frequency[0])
            
     else:
         print("no recording")

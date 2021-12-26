@@ -17,39 +17,39 @@ class SoundProcessing:
             recording (list): recorded sound that is to be processed
 
         Returns:
-            [type]: [description]
+            list, list: signal magnitude, frequency range 
         """
         
-    
-        
-        
         # obliczenie transformaty
+        #recording = signal.savgol_filter(recording, 51, 3)
         x = np.fft.fft(recording)
         x_mag = np.abs(x)
         # wyliczenie kroku w przestzreni częstotliwości 
         freq_step = SoundProcessing.SAMPLE_FREQ / len(x_mag) 
         # wyciągnięcie wartości bezwzględnej 
          
-        # Wyciągnięcie częstotliwości  
+        # Wyciągnięcie częstotliwości  - 1 sposób
         f = np.linspace(0, SoundProcessing.SAMPLE_FREQ - freq_step, len(x_mag))
-        
-        return f, x_mag
+        # Wyciągnięcie częstotliwości  - 2 sposób - korzystanie z funkcji 
+       # f = np.fft.fftfreq(len(x), freq_step)* SoundProcessing.SAMPLE_FREQ
+        # we are interested of returning fft of (sample frequency < 2) range - Nyquist freqyency
+        return f[:len(f)//2], x_mag[:len(f)//2]
     
     @staticmethod
     def count_desired_frequency(freqs, sig_mag) -> float:
         """Looks for frequency that has the biggest pin (is the frequency we are looking for)
 
         Args:
-            freqs ([type]): [description]
-            sig_mag ([type]): [description]
+            freqs (list): frequencies 
+            sig_mag (list): signal frequencies magnitudes used to find the frequency with the largest pitch
 
         Returns:
-            float: [description]
+            float: frequency that is played on instrument's string
         """
         max_magnitude = np.amax(sig_mag)
         max_freq_index = np.where(sig_mag == max_magnitude)
-        print(max_freq_index)
-        print(freqs[-1])
+   
+        
         max_freqs = freqs[max_freq_index[0]]
         return max_freqs
         
